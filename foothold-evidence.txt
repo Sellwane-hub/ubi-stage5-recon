@@ -1,0 +1,24 @@
+FOOTHOLD EVIDENCE
+=================
+recorded_at        : 2026-07-21T15:11:46.560059Z
+target             : 127.0.0.1:18098
+vhost              : dispatch-1bf4163.meridian.local
+authenticated_user : operator74
+route_key_source   : signal service ROUTE command (see run/raw/signal/signal.json)
+credential_source  : /ops-diagnostics (see run/raw/http/http.json)
+
+--- REQUEST SENT (authorization redacted) ---
+GET /user.txt HTTP/1.1
+Host: dispatch-1bf4163.meridian.local
+Authorization: Basic <redacted-basic-auth>
+X-Route-Key: 70984a8613c81749
+Connection: close
+
+
+--- RESPONSE STATUS ---
+HTTP/1.0 200 OK
+
+--- RESPONSE BODY (user.txt) ---
+UBI-EH-A1-9820F8C52168CDF76C81E2CC
+
+--- END ---

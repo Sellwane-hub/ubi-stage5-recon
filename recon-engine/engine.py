@@ -56,11 +56,13 @@ def run_discovery(target, scope_path, output_dir, rate=25):
 
     # 2. signal discovery (probe each open port; only one speaks the line protocol)
     vhost = None
+    signal_port = None
     for port in open_ports:
         try:
             sig = discover_signal(req, target, port)
             if sig.get("vhost"):
                 vhost = sig["vhost"]
+                signal_port = port
                 raw_sig = save_raw("signal", "signal.json", json.dumps(sig, indent=2))
                 records.append(make_record(
                     target, port, "tcp", "signal", "signal-probe", raw_sig,
@@ -74,10 +76,12 @@ def run_discovery(target, scope_path, output_dir, rate=25):
             notes.append({"stage": "signal", "port": port,
                           "observation": "not a signal service", "detail": str(exc)})
 
-    # 3. http/vhost discovery
+    # 3. http/vhost discovery (skip the signal port -- it does not speak HTTP)
     for port in open_ports:
         if vhost is None:
             break
+        if port == signal_port:
+            continue
         try:
             http = probe_http(req, target, port, vhost)
             if http["baseline_class"] == "retain":
@@ -88,6 +92,9 @@ def run_discovery(target, scope_path, output_dir, rate=25):
                     extra={"vhost": vhost, "baseline_class": http["baseline_class"],
                            "paths": list(http["paths"].keys()),
                            "credentials_found": bool(http["credentials"].get("username"))}))
+            else:
+                notes.append({"stage": "http", "port": port,
+                              "observation": "response matches wildcard baseline (suppressed)"})
         except ScopeViolation as exc:
             errors.append({"stage": "http", "port": port, "error": str(exc)})
         except OSError as exc:
