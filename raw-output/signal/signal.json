@@ -1,0 +1,12 @@
+{
+  "host": "127.0.0.1",
+  "port": 23319,
+  "commands": [
+    "CAPS",
+    "ROUTE",
+    "QUIT"
+  ],
+  "vhost": "dispatch-1bf4163.meridian.local",
+  "route_key": "70984a8613c81749",
+  "banner": "RLY/2 READY profile=dynamic"
+}

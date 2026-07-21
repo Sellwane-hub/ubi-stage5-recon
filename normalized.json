@@ -1,0 +1,64 @@
+[
+  {
+    "baseline_class": "retain",
+    "confidence": 0.9,
+    "credentials_found": true,
+    "notes": "genuine vhost confirmed (retain)",
+    "observed_at": "2026-07-21T16:01:10.246914Z",
+    "paths": [
+      "/",
+      "/robots.txt",
+      "/ops-diagnostics"
+    ],
+    "port": 18098,
+    "protocol": "tcp",
+    "schema_version": "1.0",
+    "service": "http",
+    "source_file": "raw/http/http.json",
+    "source_tool": "http-probe",
+    "target": "127.0.0.1",
+    "vhost": "dispatch-1bf4163.meridian.local"
+  },
+  {
+    "confidence": 0.6,
+    "notes": "open port",
+    "observed_at": "2026-07-21T16:01:06.234584Z",
+    "port": 18098,
+    "protocol": "tcp",
+    "schema_version": "1.0",
+    "service": "unknown",
+    "source_file": "raw/port-probe/ports.json",
+    "source_tool": "port-probe",
+    "target": "127.0.0.1"
+  },
+  {
+    "commands": [
+      "CAPS",
+      "ROUTE",
+      "QUIT"
+    ],
+    "confidence": 0.9,
+    "notes": "vhost=dispatch-1bf4163.meridian.local; route_key discovered",
+    "observed_at": "2026-07-21T16:01:10.238621Z",
+    "port": 23319,
+    "protocol": "tcp",
+    "schema_version": "1.0",
+    "service": "signal",
+    "source_file": "raw/signal/signal.json",
+    "source_tool": "signal-probe",
+    "target": "127.0.0.1",
+    "vhost": "dispatch-1bf4163.meridian.local"
+  },
+  {
+    "confidence": 0.6,
+    "notes": "open port",
+    "observed_at": "2026-07-21T16:01:06.234598Z",
+    "port": 23319,
+    "protocol": "tcp",
+    "schema_version": "1.0",
+    "service": "unknown",
+    "source_file": "raw/port-probe/ports.json",
+    "source_tool": "port-probe",
+    "target": "127.0.0.1"
+  }
+]

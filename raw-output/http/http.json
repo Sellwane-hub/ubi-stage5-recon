@@ -1,0 +1,22 @@
+{
+  "vhost": "dispatch-1bf4163.meridian.local",
+  "baseline_class": "retain",
+  "paths": {
+    "/": {
+      "status": 200,
+      "bytes": 56
+    },
+    "/robots.txt": {
+      "status": 200,
+      "bytes": 61
+    },
+    "/ops-diagnostics": {
+      "status": 200,
+      "bytes": 178
+    }
+  },
+  "credentials": {
+    "username": "operator74",
+    "password": "AyRGr97GbE5xvUkBOzLr"
+  }
+}

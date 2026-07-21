@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "project": "EH-A1 Recon Engine and Foothold",
+  "stage": "STAGE_5",
+  "environment": {
+    "python_required": ">=3.11",
+    "python_tested": "3.13.14",
+    "platform_tested": "macOS-13.7.8-x86_64",
+    "dependencies": "standard library only",
+    "network": "loopback only (127.0.0.1); no internet required"
+  },
+  "build": {
+    "steps": [
+      "No build step required; pure Python standard library."
+    ]
+  },
+  "test": {
+    "command": "make test",
+    "framework": "unittest",
+    "test_count": 32,
+    "published_fixtures_covered": 20,
+    "results_artifact": "test-results.xml"
+  },
+  "run": {
+    "start_lab": "python3.13 local_lab.py --marker <UBI-A5-MARKER> --output lab-runtime",
+    "command": "make run",
+    "cli": "python3.13 recon-engine/cli.py --target 127.0.0.1 --scope lab-runtime/scope.csv --output run --rate 25",
+    "outputs": [
+      "run/run.json",
+      "run/raw/",
+      "run/normalized/assets.jsonl",
+      "run/request-ledger.csv",
+      "run/errors.jsonl",
+      "run/notes.jsonl",
+      "run/checkpoint.json"
+    ]
+  },
+  "foothold": {
+    "command": "python3.13 foothold.py",
+    "note": "Separate from the recon engine (discovery only). Uses engine-discovered values to authenticate to /user.txt.",
+    "evidence": "foothold-evidence.txt"
+  },
+  "determinism": {
+    "result_hash_excludes": ["observed_at", "run timestamps"],
+    "note": "Records are sorted by identity before hashing; clean and resumed runs produce the same result_hash.",
+    "expected_result_hash": "cfbf70f52c7a7d099f6ac075002f013219b3d2189b0e5eaad148a795c8e99e3a"
+  },
+  "reproduce_from_clean": ["make clean", "make test", "make run"]
+}

@@ -1,0 +1,55 @@
+<html><head><meta charset="utf-8"><style>
+body{font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:720px;margin:40px auto;line-height:1.5;color:#222}
+h1{border-bottom:2px solid #333;padding-bottom:6px}
+h2{margin-top:28px;color:#111}
+code{background:#f2f2f2;padding:1px 4px;border-radius:3px}
+li{margin:4px 0}
+</style></head><body>
+<h1>Attack Surface Report — EH-A1 Recon Engine and Foothold</h1>
+<p><strong>Stage:</strong> 5 · <strong>Target:</strong> local loopback lab (127.0.0.1) · <strong>Engine:</strong> Python stdlib only</p>
+<h2>1. Scope</h2>
+<p>Two loopback endpoints were authorized by the generated scope: an HTTP service</p>
+<p>and a line-protocol &quot;signal&quot; service. A third loopback port was marked OUT as a</p>
+<p>scope-discipline decoy, and all non-loopback destinations were prohibited. The</p>
+<p>engine enforces scope before every socket is opened; the decoy received zero</p>
+<p>packets (see request-ledger.csv).</p>
+<h2>2. Methodology</h2>
+<p>Discovery proceeded in scope-safe stages, each routed through a single gate that</p>
+<p>checks authorization and records every request to a ledger:</p>
+<p>1. Port discovery: connect-scan of the authorized ports only.</p>
+<p>2. Signal service: read the banner, issue CAPS to learn the advertised commands,</p>
+<p>   then ROUTE to obtain the virtual host and route key. The service answers one</p>
+<p>   command per connection, so a fresh connection is used per command.</p>
+<p>3. HTTP / virtual host: a wildcard baseline was established using a random,</p>
+<p>   non-existent hostname. The genuine virtual host produced a response that</p>
+<p>   differed from the baseline (retained), confirming real content rather than</p>
+<p>   catch-all noise.</p>
+<p>4. Credential discovery: a diagnostics endpoint behind the genuine vhost</p>
+<p>   disclosed service credentials.</p>
+<h2>3. Findings</h2>
+<ul>
+<li>The HTTP service serves a stable wildcard page to unknown hostnames, hiding</li>
+</ul>
+<p>  its real content behind a specific virtual host.</p>
+<ul>
+<li>The signal service discloses the virtual host and a route-proof key.</li>
+<li>A diagnostics path behind the real vhost discloses a username and password.</li>
+<li>Reaching the protected resource requires HTTP Basic authentication and a</li>
+</ul>
+<p>  route-key header, i.e. proof from both services, a deliberate multi-service chain.</p>
+<h2>4. Foothold</h2>
+<p>Using only values discovered by the engine (virtual host, route key, username,</p>
+<p>password), a single authenticated request to /user.txt returned the runtime</p>
+<p>flag. The full request/response transcript is in foothold-evidence.txt, and the</p>
+<p>request reconciles with the lab&#x27;s own request ledger. The recon engine itself</p>
+<p>performs discovery only and never fetches the flag.</p>
+<h2>5. Scope and safety</h2>
+<p>Every request is logged before it is sent. The engine&#x27;s ledger and the lab&#x27;s</p>
+<p>independent ledger agree, and neither shows any contact with the decoy or any</p>
+<p>non-loopback destination. The full run used well under the 240-request budget.</p>
+<h2>6. Reproducibility</h2>
+<p>The engine reproduces from a clean environment (make test, make run) and produces</p>
+<p>a deterministic result hash that is identical across clean and interrupted or</p>
+<p>resumed runs. See assessment-manifest.json for exact commands and the expected</p>
+<p>hash.</p>
+</body></html>

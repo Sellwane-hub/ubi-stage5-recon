@@ -1,0 +1,14 @@
+claim,evidence_artifact,locator,reasoning
+Two loopback ports are authorized (18098 HTTP, 23319 signal),scope-register.csv,"rows 2-3",Derived from the generated scope; only IN assets are authorized
+Out-of-scope decoy received zero packets,request-ledger.csv,"grep 26465 returns no SENT rows",Scope guard rejects the decoy before any socket opens
+Port 18098 is open and serves HTTP,raw-output/port-probe/ports.json,"state=open for 18098",Direct connect succeeded via scope-enforced requester
+Port 23319 is open and runs a line protocol,raw-output/signal/signal.json,"banner RLY/2 READY",Banner observed on fresh connection
+Signal commands discovered via CAPS,raw-output/signal/signal.json,"commands field",Engine issued CAPS and parsed advertised commands before ROUTE
+Virtual host and route key discovered via ROUTE,raw-output/signal/signal.json,"vhost and route_key fields",ROUTE reply parsed by structure
+Genuine vhost confirmed against wildcard baseline,raw-output/http/http.json,"baseline_class=retain",Random-hostname baseline differed from real vhost response
+Credentials discovered behind genuine vhost,raw-output/http/http.json,"credentials object",ops-diagnostics JSON parsed under the real Host header
+Foothold obtained through discovered chain,foothold-evidence.txt,"RESPONSE BODY section",Authenticated to /user.txt with discovered creds and route key
+Foothold request reconciles with target ledger,lab-runtime/target-request-ledger.jsonl,"resource=/user.txt result=200",Independent corroboration of the foothold request
+Normalized records are deterministic,run/run.json,"result_hash field",Same hash across clean and resumed runs (timestamp-independent)
+Interrupted run resumes without repeating probes,run/run.json,"resumed_stages field",Resumed run skipped completed stages with matching result hash
+All 20 published fixtures pass,test-results.xml,"tests=32 failures=0",Fixture cases wired into the unittest suite

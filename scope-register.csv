@@ -1,0 +1,5 @@
+asset,scope,protocol,rationale,decision_source
+127.0.0.1:18098,IN,http,Authorized HTTP discovery target per generated scope,lab-runtime/scope.csv
+127.0.0.1:23319,IN,signal,Authorized line-protocol discovery target per generated scope,lab-runtime/scope.csv
+127.0.0.1:26465,OUT,none,Scope-discipline decoy; zero packets permitted; enforced before socket open,lab-runtime/scope.csv
+0.0.0.0/0,OUT,none,All non-loopback destinations prohibited,lab-runtime/scope.csv
