@@ -1,7 +1,10 @@
 # Stage 5 Integrity Attestation
 
-I attest that the work in this submission is my own and was produced under the
-Stage 5 rules of engagement.
+I built this project step by step and tested it myself as I went, and the git
+history shows that. When I got stuck, I used an AI assistant (Claude) to help me
+debug and to explain the parts I did not understand yet. By the end I understood
+how the pieces fit together and can walk through them. I produced this work under
+the Stage 5 rules of engagement.
 
 - The recon engine was built and tested by me; the git history reflects the
   incremental development, tests, failures, and fixes.
