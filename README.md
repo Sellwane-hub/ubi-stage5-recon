@@ -80,3 +80,16 @@ run, because normalization sorts records by identity before hashing.
 
 The result hash in `run/run.json` will match across clean runs on the same lab
 profile.
+
+## Repository
+
+Source repository (public), with full commit history showing incremental
+development, tests, failures, and fixes:
+
+https://github.com/Sellwane-hub/ubi-stage5-recon
+
+Clean-build and test commands:
+
+    make clean
+    make test
+    make run
